@@ -59,28 +59,42 @@
       // onsuccess
       // 1) kita akan save token dan refresh token dekat dalam browser
       // 2) kita redirect user ke index
+
+      /* CODING*/
+      // 1. dapatkan value username & password
       function onSubmit(){
         const username = document.getElementById('usernameInput').value
         const password = document.getElementById('passwordInput').value
         console.log(`username ${username}, password ${password}`)
 
-        fetch('https://api.kelasprogramming.com/consumer/login', {
-            method: 'POST',
-            headers: {
-              "Content-type": "application/json"
-            },
-            body: JSON.stringify({
-              "username": username,
-              "password": password
-            })
+      //2. http request utk login
+        fetch ('https://api.kelasprogramming.com/consumer/login', {
+          method: 'POST',
+          headers: {
+            "Content-type": "application/json"
+          },
+          body: JSON.stringify ({
+            //"username":"munirahyusoff",
+            //"password":"RAHsia1234"
+
+            "username": username,
+            "password": password
           })
-          .then(res => res.json())
-          .then(body => {
-            localStorage.setItem('todoJWTtoken', body.token)
-            localStorage.setItem('todoRefreshToken', body.refresh_token)
-            window.location.href = './index.html'
-          })
-          .catch(err => {debugger})
+        })
+        .then(res => res.json())
+
+        //3. save token dan refresh token dekat dalam browser
+        //read token from postman > login > authorization
+        .then (body => {
+          localStorage.setItem('todoJWTtoken', body.token) 
+          localStorage.setItem('todoRefreshtoken', body.refresh_token)
+          
+      //Redirect to another location. e.g Go to root location
+      //Simulate a mouse click:
+        window.location.href = './index.html' 
+
+        })
+        .catch (err => {debugger})
       }
 
       // onerror, kita display error
